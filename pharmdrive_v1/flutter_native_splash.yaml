@@ -1,0 +1,7 @@
+# flutter_native_splash.yaml
+
+flutter_native_splash:
+  color: "#42a5f5"
+  image: assets/logo/medicine.gif
+  android: true
+  ios: true
