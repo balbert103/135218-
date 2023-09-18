@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "197209413056",
+    "project_id": "pharmdrive-fc231",
+    "storage_bucket": "pharmdrive-fc231.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197209413056:android:98bfc0f27917c8a0b22425",
+        "android_client_info": {
+          "package_name": "com.example.pharmdrive_v1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArVGXHNCez2kybegvci1aLU96w-aMQPfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

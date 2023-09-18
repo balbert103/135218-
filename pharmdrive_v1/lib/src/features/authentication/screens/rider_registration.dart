@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmdrive_v1/src/features/authentication/controllers/RiderAuthenticationController.dart';
 
 class RiderRegistrationPage extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class RiderRegistrationPage extends StatefulWidget {
 
 class _RiderRegistrationPageState extends State<RiderRegistrationPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
 
   String? _email;
   String? _password;
@@ -180,11 +182,35 @@ class _RiderRegistrationPageState extends State<RiderRegistrationPage> {
                 ),
 
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      // Rider registration logic
-                      // Access the collected data using _email, _password, etc.
+
+                      // Call AuthService to register the rider
+                      final result = await _auth.registerRider(
+                        email: _email!,
+                        password: _password!,
+                        firstName: _firstName!,
+                        lastName: _lastName!,
+                        nationalId: _nationalId!,
+                        age: _age!,
+                        phoneNumber: _phoneNumber!,
+                        bikeType: _bikeType!,
+                        bikeColor: _bikeColor!,
+                        numberPlate: _numberPlate!,
+                      );
+
+                      if (result == null) {
+                        // Registration successful
+                        // You can navigate to a success page or perform other actions
+                      } else {
+                        // Registration failed, show an error message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(result),
+                          ),
+                        );
+                      }
                     }
                   },
                   child: Text('Register as Rider'),
