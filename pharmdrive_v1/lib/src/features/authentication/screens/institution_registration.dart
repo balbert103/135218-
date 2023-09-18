@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pharmdrive_v1/src/features/authentication/controllers/institutionAuthenticationController.dart';
 
 class InstitutionRegistrationPage extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class InstitutionRegistrationPage extends StatefulWidget {
 class _InstitutionRegistrationPageState
     extends State<InstitutionRegistrationPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final InstitutionAuthService _auth = InstitutionAuthService();
 
   String? _email;
   String? _password;
@@ -21,7 +23,7 @@ class _InstitutionRegistrationPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Institution Registration'),
+        title: const Text('Institution Registration'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -120,11 +122,31 @@ class _InstitutionRegistrationPageState
                 ),
 
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      // Institution registration logic
-                      // Access the collected data using _email, _password, etc.
+
+                      // Call InstitutionAuthService to register the institution
+                      final result = await _auth.registerInstitution(
+                        email: _email!,
+                        password: _password!,
+                        institutionName: _institutionName!,
+                        location: _location!,
+                        phoneNumber: _phoneNumber!,
+                        status: _status!,
+                      );
+
+                      if (result == null) {
+                        // Registration successful
+                        // You can navigate to a success page or perform other actions
+                      } else {
+                        // Registration failed, show an error message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(result),
+                          ),
+                        );
+                      }
                     }
                   },
                   child: Text('Register as Institution'),
