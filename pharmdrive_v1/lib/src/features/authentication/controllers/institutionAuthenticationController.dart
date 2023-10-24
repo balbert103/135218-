@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-class InstitutionAuthService {
+import 'package:pharmdrive_v1/src/utils/auth_logic.dart';
+
+class InstitutionAuthenticationController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String?> registerInstitution({
+  Future<void> registerInstitution({
     required String email,
     required String password,
     required String institutionName,
@@ -14,28 +14,18 @@ class InstitutionAuthService {
     required String status,
   }) async {
     try {
-      // Step 1: Create a Firebase user with email and password
-      final UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      // Call the registration method from auth_logic.dart
+      await AuthLogic.registerInstitution(
         email: email,
         password: password,
+        institutionName: institutionName,
+        location: location,
+        phoneNumber: phoneNumber,
+        status: status,
       );
-
-      // Step 2: Get the newly created user's UID
-      final String uid = userCredential.user!.uid;
-
-      // Step 3: Create a document for the institution in Firestore with additional fields
-      await _firestore.collection('institutions').doc(uid).set({
-        'email': email,
-        'institutionName': institutionName,
-        'location': location,
-        'phoneNumber': phoneNumber,
-        'status': status,
-      });
-
-      return null; // Registration successful, no error
     } catch (e) {
-      return e.toString(); // Registration failed, return the error message
+      // Handle any registration errors here, e.g., show error message to the user.
+      print('Error during registration: $e');
     }
   }
 }

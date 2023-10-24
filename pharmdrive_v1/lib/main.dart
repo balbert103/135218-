@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Your App',
+      title: 'Pharmdirve',
       initialRoute:
           AppRoutes.welcome, // Set the initial route to the WelcomePage
       routes: {

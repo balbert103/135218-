@@ -1,49 +1,38 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:pharmdrive_v1/src/utils/auth_riderlogic.dart';
+// Import your rider authentication logic
 
-class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class RiderRegistrationController {
+  final AuthRiderLogic _authLogic = AuthRiderLogic();
 
-  Future<String?> registerRider({
+  Future<void> registerRider({
     required String email,
-    required String password,
     required String firstName,
     required String lastName,
     required String nationalId,
-    required int age,
+    required String kraNumber,
     required String phoneNumber,
     required String bikeType,
-    required String bikeColor,
+    required String bikeColour,
     required String numberPlate,
+    required String password,
   }) async {
     try {
-      // Step 1: Create a Firebase user with email and password
-      final UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      // Call the registration method from AuthRiderLogic
+      await AuthRiderLogic.registerRider(
         email: email,
+        firstName: firstName,
+        lastName: lastName,
+        nationalId: nationalId,
+        kraNumber: kraNumber,
+        phoneNumber: phoneNumber,
+        bikeType: bikeType,
+        bikeColour: bikeColour,
+        numberPlate: numberPlate,
         password: password,
       );
-
-      // Step 2: Get the newly created user's UID
-      final String uid = userCredential.user!.uid;
-
-      // Step 3: Create a document for the user in Firestore with additional fields
-      await _firestore.collection('riders').doc(uid).set({
-        'email': email,
-        'firstName': firstName,
-        'lastName': lastName,
-        'nationalId': nationalId,
-        'age': age,
-        'phoneNumber': phoneNumber,
-        'bikeType': bikeType,
-        'bikeColor': bikeColor,
-        'numberPlate': numberPlate,
-      });
-
-      return null; // Registration successful, no error
     } catch (e) {
-      return e.toString(); // Registration failed, return the error message
+      // Handle any registration errors here, e.g., show error message to the user.
+      print('Error during rider registration: $e');
     }
   }
 }
