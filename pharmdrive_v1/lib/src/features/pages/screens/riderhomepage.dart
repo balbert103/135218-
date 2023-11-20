@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RiderHomePage extends StatelessWidget {
-  const RiderHomePage({super.key});
+  const RiderHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

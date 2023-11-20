@@ -4,7 +4,7 @@ import 'package:pharmdrive_v1/src/features/authentication/screens/login_page.dar
 import 'package:pharmdrive_v1/src/utils/auth_logic.dart';
 
 class InstitutionRegistrationPage extends StatefulWidget {
-  const InstitutionRegistrationPage({super.key});
+  const InstitutionRegistrationPage({Key? key}) : super(key: key);
 
   @override
   _InstitutionRegistrationPageState createState() =>
@@ -90,7 +90,7 @@ class _InstitutionRegistrationPageState
                     .toList(),
                 onChanged: (value) {
                   setState(() {
-                    _selectedStatus = value!;
+                    //_selectedStatus = value!;
                   });
                 },
               ),
